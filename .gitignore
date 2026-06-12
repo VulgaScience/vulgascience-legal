@@ -1,0 +1,30 @@
+
+# Python / project ignores
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenv
+.venv/
+venv/
+
+# Environment / secrets
+.env
+.env.local
+.TOKEN*
+
+# Local storage / build artifacts
+storage/
+outbox/
+published/
+*.sqlite3
+
+# Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db

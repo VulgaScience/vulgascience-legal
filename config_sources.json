@@ -1,0 +1,22 @@
+
+{
+  "youtube_channels": [
+    {
+      "id": "UC6nSFpj9HTCZ5t-N3Rm3-HA",
+      "name": "Kurzgesagt - In a Nutshell",
+      "license": "unknown"
+    },
+    {
+      "id": "UCJFp8uSYCjXOMnkUyb3CQ3Q",
+      "name": "3Blue1Brown",
+      "license": "unknown"
+    }
+  ],
+  "youtube_search_terms": [
+    "science conference lecture",
+    "research presentation",
+    "arXiv summary",
+    "neuroscience seminar"
+  ],
+  "rss_feeds": []
+}

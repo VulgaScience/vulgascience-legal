@@ -1,0 +1,33 @@
+
+version: '3.8'
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: pipeline
+      POSTGRES_PASSWORD: pipeline
+      POSTGRES_DB: pipeline
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  worker:
+    build: .
+    depends_on:
+      - redis
+      - postgres
+    volumes:
+      - ./:/app
+      - ./storage:/storage
+    environment:
+      - ENV_FILE=.env
+    command: ["bash", "-c", "python -u src/prefect_flow.py"]
+
+volumes:
+  redis-data:
+  pgdata:

@@ -1,0 +1,26 @@
+
+{
+  "default": {
+    "provider": "elevenlabs",
+    "voice_id": "alloy",
+    "speed": 1.0,
+    "pitch": 1.0
+  },
+  "variants": [
+    {
+      "name": "warm_male",
+      "provider": "elevenlabs",
+      "voice_id": "male_warm"
+    },
+    {
+      "name": "bright_female",
+      "provider": "elevenlabs",
+      "voice_id": "female_bright"
+    },
+    {
+      "name": "coqui_neutral",
+      "provider": "coqui",
+      "voice_id": "vocoder_default"
+    }
+  ]
+}

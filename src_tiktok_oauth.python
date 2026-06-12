@@ -1,0 +1,137 @@
+
+"""
+src/tiktok_oauth.py
+
+Petit utilitaire OAuth pour TikTok for Developers.
+Usage (résumé) :
+1) Crée ton application TikTok for Developers et note CLIENT_KEY (client_id) et CLIENT_SECRET.
+2) Mets CLIENT_KEY et CLIENT_SECRET dans .env (voir README).
+3) Lance : python src/tiktok_oauth.py
+4) Le script ouvre une URL d'autorisation dans ton navigateur ; autorise l'app avec le compte TikTok (celui où tu veux publier).
+5) Le serveur local capture le code, échange contre access + refresh token, et écrit les valeurs dans .env.
+
+Remarque : adapte TOKEN_URL / AUTHORIZE_URL si TikTok change ses endpoints (consulte la doc officielle).
+"""
+import os
+import json
+import webbrowser
+import requests
+from urllib.parse import urlencode
+from http import HTTPStatus
+from dotenv import load_dotenv, set_key
+from pathlib import Path
+from flask import Flask, request, redirect
+
+load_dotenv()
+APP_ROOT = Path(__file__).resolve().parent.parent
+ENV_PATH = APP_ROOT / ".env"
+
+CLIENT_KEY = os.getenv("TIKTOK_CLIENT_KEY", "")
+CLIENT_SECRET = os.getenv("TIKTOK_CLIENT_SECRET", "")
+REDIRECT_HOST = "http://localhost"
+REDIRECT_PORT = 8000
+REDIRECT_URI = f"{REDIRECT_HOST}:{REDIRECT_PORT}/callback"
+
+# NOTE: endpoints may change. Check TikTok for Developers docs.
+AUTHORIZE_URL = "https://www.tiktok.com/auth/authorize"
+TOKEN_URL = "https://open-api.tiktok.com/oauth/access_token/"
+
+SCOPES = ["video.upload", "video.publish", "user.info"]  # adjust if needed
+
+app = Flask(__name__)
+
+def build_authorize_url(client_key, redirect_uri, scopes, state="vulga_state_1"):
+    params = {
+        "client_key": client_key,
+        "response_type": "code",
+        "scope": ",".join(scopes),
+        "redirect_uri": redirect_uri,
+        "state": state,
+        # "display": "popup"  # optional
+    }
+    return AUTHORIZE_URL + "?" + urlencode(params)
+
+def exchange_code_for_token(client_key, client_secret, code, redirect_uri):
+    """
+    Exchange authorization code for access token / refresh token.
+    Implementation uses typical TikTok token endpoint shape (may vary).
+    """
+    data = {
+        "client_key": client_key,
+        "client_secret": client_secret,
+        "code": code,
+        "grant_type": "authorization_code",
+        "redirect_uri": redirect_uri
+    }
+    try:
+        resp = requests.post(TOKEN_URL, data=data, timeout=15)
+        resp.raise_for_status()
+        return resp.json()
+    except Exception as e:
+        return {"error": str(e), "raw": getattr(e, "response", None) and e.response.text}
+
+def write_tokens_to_env(tokens: dict):
+    """
+    Writes tokens to .env using python-dotenv set_key for safety.
+    """
+    if not ENV_PATH.exists():
+        ENV_PATH.touch()
+    # Save common fields safely (do not print secrets)
+    set_key(str(ENV_PATH), "TIKTOK_CLIENT_KEY", CLIENT_KEY)
+    set_key(str(ENV_PATH), "TIKTOK_CLIENT_SECRET", CLIENT_SECRET)
+    if "access_token" in tokens:
+        set_key(str(ENV_PATH), "TIKTOK_ACCESS_TOKEN", tokens.get("access_token", ""))
+    if "refresh_token" in tokens:
+        set_key(str(ENV_PATH), "TIKTOK_REFRESH_TOKEN", tokens.get("refresh_token", ""))
+    if "expires_in" in tokens:
+        set_key(str(ENV_PATH), "TIKTOK_EXPIRES_IN", str(tokens.get("expires_in", "")))
+    # store full token response as metadata for debugging (optional)
+    set_key(str(ENV_PATH), "TIKTOK_TOKEN_RAW", json.dumps(tokens))
+
+@app.route("/")
+def index():
+    return "<p>TikTok OAuth helper. Go to /start to begin authorization.</p>"
+
+@app.route("/start")
+def start():
+    if not CLIENT_KEY or not CLIENT_SECRET:
+        return ("TIKTOK_CLIENT_KEY or TIKTOK_CLIENT_SECRET missing in .env. "
+                "Please set them and restart this script."), HTTPStatus.BAD_REQUEST
+    url = build_authorize_url(CLIENT_KEY, REDIRECT_URI, SCOPES)
+    return redirect(url)
+
+@app.route("/callback")
+def callback():
+    error = request.args.get("error")
+    if error:
+        return f"Authorization failed: {error}", HTTPStatus.BAD_REQUEST
+    code = request.args.get("code")
+    state = request.args.get("state")
+    if not code:
+        return "No code provided in callback.", HTTPStatus.BAD_REQUEST
+    # Exchange code for tokens
+    result = exchange_code_for_token(CLIENT_KEY, CLIENT_SECRET, code, REDIRECT_URI)
+    # Basic success check (depends on TikTok response format)
+    if isinstance(result, dict) and result.get("data"):
+        token_data = result["data"]
+    elif isinstance(result, dict) and ("access_token" in result or "refresh_token" in result):
+        token_data = result
+    else:
+        return f"Token exchange failed: {json.dumps(result)}", HTTPStatus.INTERNAL_SERVER_ERROR
+    write_tokens_to_env(token_data)
+    return ("Authorization successful. Tokens written to .env. You can close this page and return to the terminal."
+            "<br><br><b>Important:</b> do not share your tokens publicly."), HTTPStatus.OK
+
+def open_browser_start():
+    url = f"http://localhost:{REDIRECT_PORT}/start"
+    print("Opening browser to:", url)
+    webbrowser.open(url, new=2, autoraise=True)
+
+def main():
+    print("TikTok OAuth helper - starting local server on port", REDIRECT_PORT)
+    print("Redirect URI must match the one configured in your TikTok app:", REDIRECT_URI)
+    open_browser_start()
+    app.run(host="0.0.0.0", port=REDIRECT_PORT, debug=False)
+
+if __name__ == "__main__":
+    main()
