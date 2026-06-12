@@ -1,12 +1,12 @@
 
 """
-src/tiktok_oauth.py
+src_tiktok_oauth.py
 
 Petit utilitaire OAuth pour TikTok for Developers.
 Usage (résumé) :
 1) Crée ton application TikTok for Developers et note CLIENT_KEY (client_id) et CLIENT_SECRET.
 2) Mets CLIENT_KEY et CLIENT_SECRET dans .env (voir README).
-3) Lance : python src/tiktok_oauth.py
+3) Lance : python src_tiktok_oauth.py
 4) Le script ouvre une URL d'autorisation dans ton navigateur ; autorise l'app avec le compte TikTok (celui où tu veux publier).
 5) Le serveur local capture le code, échange contre access + refresh token, et écrit les valeurs dans .env.
 

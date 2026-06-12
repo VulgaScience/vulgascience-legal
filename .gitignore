@@ -1,30 +1,152 @@
-
-# Python / project ignores
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
+*.py[codz]
 *$py.class
 
-# Virtualenv
-.venv/
-venv/
+# C extensions
+*.so
 
-# Environment / secrets
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff
+instance/
+.webassets-cache
+
+# Scrapy stuff
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environments and secrets
 .env
-.env.local
+.env.txt
+.env.*
+!.env.example
+.envrc
 .TOKEN*
+.venv/
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+Backup-codes*.txt
 
-# Local storage / build artifacts
+# Dependency managers
+uv.lock
+.pdm-python
+.pdm-build/
+.pixi/
+__pypackages__/
+
+# Local generated pipeline output
 storage/
+downloads/
 outbox/
 published/
 *.sqlite3
 
-# Editors
+# Prefect / services
+celerybeat-schedule
+celerybeat.pid
+*.rdb
+*.aof
+*.pid
+mnesia/
+rabbitmq/
+rabbitmq-data/
+activemq-data/
+
+# Type checkers and tooling
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+.ruff_cache/
+.pypirc
+
+# Editors and OS files
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
-
-# OS files
+tempCodeRunnerFile.py
 .DS_Store
 Thumbs.db
+
+# Abstra
+.abstra/
+
+# Marimo
+marimo/_static/
+marimo/_lsp/
+__marimo__/
+
+# Streamlit
+.streamlit/secrets.toml

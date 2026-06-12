@@ -41,7 +41,7 @@ pip install flask python-dotenv requests
 
 4) Lancer le script OAuth local
 ```bash
-python src/tiktok_oauth.py
+python src_tiktok_oauth.py
 ```
 - Le script ouvrira automatiquement `http://localhost:8000/start` dans ton navigateur.
 - Autorise l'app en utilisant ton compte TikTok (connecte-toi si nécessaire).

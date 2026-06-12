@@ -26,7 +26,7 @@ services:
       - ./storage:/storage
     environment:
       - ENV_FILE=.env
-    command: ["bash", "-c", "python -u src/prefect_flow.py"]
+    command: ["bash", "-c", "python -u src_prefect_flow.py"]
 
 volumes:
   redis-data:

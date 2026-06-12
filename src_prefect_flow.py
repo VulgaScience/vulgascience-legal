@@ -2,7 +2,6 @@
 import os
 import time
 import json
-import threading
 from dotenv import load_dotenv
 from pathlib import Path
 from prefect import flow, task, get_run_logger
@@ -10,10 +9,10 @@ from prefect import flow, task, get_run_logger
 load_dotenv()
 
 FETCH_INTERVAL = int(os.getenv("FETCH_INTERVAL_MIN", "30")) * 60
-SOURCES_FILE = Path("config/sources.json")
+SOURCES_FILE = Path(os.getenv("SOURCES_FILE", "config_sources.json"))
 
 # Import pipeline functions
-from pipeline import process_url
+from src_pipeline import process_url
 
 @task
 def discover_urls():
