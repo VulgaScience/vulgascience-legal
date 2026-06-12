@@ -10,6 +10,7 @@ moviepy==1.0.3
 ffmpeg-python==0.2.0
 python-dotenv==1.0.0
 flask==3.0.3
+edge-tts==7.2.8
 # Optional: install whisperx separately if you want local transcription.
 pytrends==4.9.2
 google-api-python-client==2.94.0
