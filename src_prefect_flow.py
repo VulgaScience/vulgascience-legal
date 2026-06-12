@@ -2,8 +2,12 @@
 import os
 import time
 import json
+import logging
 from dotenv import load_dotenv
 from pathlib import Path
+
+os.environ.setdefault("PREFECT_HOME", str(Path(os.getenv("STORAGE_ROOT", "./storage")) / "prefect"))
+
 from prefect import flow, task, get_run_logger
 
 load_dotenv()
@@ -14,9 +18,15 @@ SOURCES_FILE = Path(os.getenv("SOURCES_FILE", "config_sources.json"))
 # Import pipeline functions
 from src_pipeline import process_url
 
+def logger_or_default():
+    try:
+        return get_run_logger()
+    except Exception:
+        return logging.getLogger(__name__)
+
 @task
 def discover_urls():
-    logger = get_run_logger()
+    logger = logger_or_default()
     # Very simple discovery: read config and build search URLs from channel ids
     try:
         cfg = json.loads(SOURCES_FILE.read_text())
@@ -32,7 +42,7 @@ def discover_urls():
 
 @task
 def schedule_process(urls):
-    logger = get_run_logger()
+    logger = logger_or_default()
     results = []
     for url in urls:
         try:
