@@ -12,18 +12,21 @@ Pré-requis
 1. Va sur la console développeur TikTok (TikTok for Developers / Open API).
 2. Crée une nouvelle application :
    - Nom : ex. "VulgaScience Publisher"
-   - Redirect URI : `http://localhost:8000/callback`
-   - Scopes : `video.upload,video.publish,user.info` (sépare par des virgules si demandé)
+   - Redirect URI : `https://vulgascience.github.io/vulgascience-legal/callback.html`
+   - Scopes recommandés au départ : `video.upload,user.info.basic`
+   - Scope optionnel plus tard : `video.publish` si tu veux publier directement sans validation dans TikTok
    - Site / Privacy : tu peux mettre `http://localhost:8000` pour test
 3. Récupère CLIENT_KEY (client_id) et CLIENT_SECRET (client_secret) fournis par TikTok.
 
-Remarque : certaines fonctionnalités (upload/publish) peuvent demander validation par TikTok. Si l'API refuse l'upload initialement, tu utiliseras le fallback Appium/ADB.
+Remarque : TikTok demande une URL de redirection HTTPS pour Login Kit Web. La page `callback.html` affiche le code OAuth, puis le script local l'échange contre les tokens sans exposer le client secret dans le navigateur.
 
 2) Préparer `.env`
 A la racine du projet (même dossier que docker-compose.yml), édite `.env` et ajoute :
 ```
 TIKTOK_CLIENT_KEY=ta_valeur_client_key
 TIKTOK_CLIENT_SECRET=ta_valeur_client_secret
+TIKTOK_SCOPES=video.upload,user.info.basic
+TIKTOK_REDIRECT_URI=https://vulgascience.github.io/vulgascience-legal/callback.html
 ```
 (N'ajoute pas encore ACCESS/REFRESH — le script les écrira.)
 
@@ -39,26 +42,33 @@ pip install -r requirements.txt
 pip install flask python-dotenv requests
 ```
 
-4) Lancer le script OAuth local
+4) Générer l'URL OAuth
 ```bash
-python src_tiktok_oauth.py
+python src_tiktok_oauth.py auth-url --open
 ```
-- Le script ouvrira automatiquement `http://localhost:8000/start` dans ton navigateur.
-- Autorise l'app en utilisant ton compte TikTok (connecte-toi si nécessaire).
-- TikTok redirigera vers `http://localhost:8000/callback?code=...`.
-- Le script échange le code et écrit les tokens dans `.env` :
+- Le navigateur ouvre la page d'autorisation TikTok.
+- Autorise l'app en utilisant le compte TikTok qui recevra les brouillons.
+- TikTok redirigera vers `https://vulgascience.github.io/vulgascience-legal/callback.html?code=...`.
+- Copie le code affiché par la page.
+
+5) Échanger le code contre les tokens
+```bash
+python src_tiktok_oauth.py exchange --code TON_CODE_ICI
+```
+- Le script écrit les tokens dans `.env` :
   - TIKTOK_ACCESS_TOKEN
   - TIKTOK_REFRESH_TOKEN
   - TIKTOK_EXPIRES_IN (éventuel)
   - TIKTOK_TOKEN_RAW (réponse brute, utile pour debugging)
 
-5) Après obtention des tokens
+6) Après obtention des tokens
 - Vérifie que `.env` contient bien `TIKTOK_ACCESS_TOKEN` et `TIKTOK_REFRESH_TOKEN`.
-- Teste l'upload de test via `src/tiktok_publisher.py` (fonction `publish_from_path`) — attention : endpoints évoluent, vérifie la doc TikTok.
+- Mets `REVIEW_MODE=tiktok_inbox` pour que les vidéos validées par le quality gate arrivent dans TikTok inbox.
+- Teste l'upload avec `python src_approval_queue.py stage <draft_id>`.
 
-6) Si l'API TikTok refuse l'accès (app non validée)
+7) Si l'API TikTok refuse l'accès
 - Option A : demander la validation de l'app via la console développeur (peut demander description d'usage et échantillons).
-- Option B : utiliser le fallback ADB/Appium pour téléverser via un émulateur Android connecté (je peux générer le script d'automatisation si nécessaire).
+- Option B : rester sur le dépôt local dans `storage/review/` puis upload manuel.
 
 Sécurité
 - Ne partage jamais CLIENT_SECRET, ACCESS_TOKEN ou REFRESH_TOKEN.

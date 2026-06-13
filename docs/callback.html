@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TikTok OAuth Callback - VulgaScience</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.5;color:#eef6ff;background:#08111f}
+    main{max-width:900px;margin:0 auto;padding:48px 24px}
+    h1{font-size:2rem;margin:0 0 12px}
+    p{color:#b9c7d8}
+    code,textarea{font-family:Consolas,Menlo,monospace}
+    textarea{width:100%;min-height:84px;border:1px solid #314363;border-radius:10px;background:#101b2d;color:#eef6ff;padding:12px}
+    button{margin-top:10px;border:0;border-radius:10px;background:#15dce8;color:#06101f;font-weight:700;padding:10px 14px;cursor:pointer}
+    .card{margin-top:24px;padding:20px;border:1px solid #263956;border-radius:16px;background:#101b2d}
+    .error{color:#ff7088}
+    .ok{color:#4ada8a}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>TikTok authorization callback</h1>
+    <p>This page captures the TikTok authorization response for VulgaScience Publisher.</p>
+    <div id="result" class="card"></div>
+  </main>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code") || "";
+    const state = params.get("state") || "";
+    const scopes = params.get("scopes") || params.get("scope") || "";
+    const error = params.get("error") || "";
+    const description = params.get("error_description") || "";
+    const result = document.getElementById("result");
+
+    if (error) {
+      result.innerHTML = `<h2 class="error">Authorization failed</h2><p>${error}</p><p>${description}</p>`;
+    } else if (code) {
+      result.innerHTML = `
+        <h2 class="ok">Authorization code received</h2>
+        <p>Copy this code, then exchange it locally with the project helper.</p>
+        <textarea id="codeBox" readonly>${code}</textarea>
+        <button id="copyBtn">Copy code</button>
+        <p><strong>State:</strong> <code>${state || "not provided"}</code></p>
+        <p><strong>Granted scopes:</strong> <code>${scopes || "not provided"}</code></p>
+      `;
+      document.getElementById("copyBtn").addEventListener("click", async () => {
+        await navigator.clipboard.writeText(code);
+        document.getElementById("copyBtn").textContent = "Copied";
+      });
+    } else {
+      result.innerHTML = "<h2>No authorization code found</h2><p>Return to TikTok and authorize the app again.</p>";
+    }
+  </script>
+</body>
+</html>

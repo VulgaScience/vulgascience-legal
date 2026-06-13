@@ -1,0 +1,30 @@
+{
+  "id": "string",
+  "topic": "string",
+  "duration_target_seconds": 65,
+  "positioning": "string",
+  "hook": "string",
+  "voice": {
+    "preferred": "fr-FR-DeniseNeural",
+    "rate": "-2%",
+    "style": "clear, human, curious, technical but accessible"
+  },
+  "caption": "string",
+  "cta": "string",
+  "upload_note": "Add a low-volume trending TikTok sound during final inbox review.",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 2.0,
+      "text": "subtitle and voiceover text",
+      "visual": "visual instruction"
+    }
+  ],
+  "quality_targets": {
+    "format": "vertical 9:16",
+    "min_duration_seconds": 60,
+    "max_duration_seconds": 75,
+    "subtitle_style": "large burned-in subtitles, max 2 lines",
+    "audio": "voice clear over low bed"
+  }
+}

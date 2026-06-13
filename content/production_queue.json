@@ -1,0 +1,102 @@
+{
+  "updated_at": "2026-06-13",
+  "channel": "VulgaScience",
+  "objective": "Monetizable educational TikTok videos, 60-75 seconds, final review in TikTok inbox.",
+  "candidates": [
+    {
+      "id": "dopamine_prediction_reward",
+      "topic": "Dopamine and reward prediction",
+      "hook": "La dopamine ne te donne pas du plaisir. Elle te dit surtout : recommence.",
+      "angle": "Erreur de prediction de recompense, apprentissage par renforcement, anticipation.",
+      "duration_target_seconds": 68,
+      "visual_plan": "Prediction/reward gauge, notification loop, stimulus-action feedback.",
+      "cta": "Commente DOPAMINE si tu veux l'exemple du scroll infini.",
+      "caption": "La dopamine est souvent un signal d'apprentissage, pas juste une molecule du plaisir. #cerveau #dopamine #neurosciences #science",
+      "scores": {
+        "trend_fit": 8,
+        "science_fit": 9,
+        "search_value": 8,
+        "retention_hook": 9,
+        "demo_potential": 7,
+        "comment_trigger": 8,
+        "monetization_fit": 9
+      }
+    },
+    {
+      "id": "phantom_phone_vibration",
+      "topic": "Phantom phone vibration",
+      "hook": "Tu as deja senti ton telephone vibrer... alors qu'il n'avait rien recu ?",
+      "angle": "Prediction sensorielle, attention, faux positifs, cortex somatosensoriel.",
+      "duration_target_seconds": 65,
+      "visual_plan": "Phone in pocket, vibration wave, detection threshold graph.",
+      "cta": "Mets VIBRE si ca t'est deja arrive.",
+      "caption": "La vibration fantome est un bon exemple de cerveau predictif. #cerveau #illusion #neurosciences #science",
+      "scores": {
+        "trend_fit": 7,
+        "science_fit": 8,
+        "search_value": 7,
+        "retention_hook": 9,
+        "demo_potential": 8,
+        "comment_trigger": 9,
+        "monetization_fit": 8
+      }
+    },
+    {
+      "id": "nose_filtered_from_vision",
+      "topic": "Why the brain filters the nose from vision",
+      "hook": "Ton nez est toujours dans ton champ de vision. Ton cerveau le supprime presque tout le temps.",
+      "angle": "Habituation, inhibition sensorielle, constance perceptive, attention.",
+      "duration_target_seconds": 62,
+      "visual_plan": "Visual field, nose silhouette, attention filter, before/after overlay.",
+      "cta": "Commente NEZ si tu viens de le voir.",
+      "caption": "Ton cerveau filtre une partie du monde pour economiser de l'attention. #cerveau #perception #science",
+      "scores": {
+        "trend_fit": 6,
+        "science_fit": 8,
+        "search_value": 7,
+        "retention_hook": 8,
+        "demo_potential": 9,
+        "comment_trigger": 9,
+        "monetization_fit": 8
+      }
+    },
+    {
+      "id": "why_stars_twinkle",
+      "topic": "Why stars twinkle",
+      "hook": "Les etoiles ne clignotent pas vraiment. C'est notre atmosphere qui bouge.",
+      "angle": "Turbulence atmospherique, refraction, front d'onde, seeing astronomique.",
+      "duration_target_seconds": 64,
+      "visual_plan": "Wavy light ray, atmosphere layers, star vs planet comparison.",
+      "cta": "Mets ETOILE si tu veux la difference etoile/planete.",
+      "caption": "Le scintillement des etoiles est une consequence directe de la turbulence atmospherique. #astronomie #science #espace",
+      "scores": {
+        "trend_fit": 5,
+        "science_fit": 9,
+        "search_value": 8,
+        "retention_hook": 7,
+        "demo_potential": 8,
+        "comment_trigger": 6,
+        "monetization_fit": 8
+      }
+    },
+    {
+      "id": "predictive_coding_followup",
+      "topic": "Predictive coding follow-up",
+      "hook": "Tu ne vois pas seulement avec tes yeux. Tu vois avec tes hypotheses.",
+      "angle": "Codage predictif, erreur de prediction, integration top-down/bottom-up.",
+      "duration_target_seconds": 68,
+      "visual_plan": "Retina-to-cortex signal, internal model, prediction error overlay.",
+      "cta": "Commente ILLUSION pour la demonstration.",
+      "caption": "Le codage predictif explique pourquoi certaines illusions sont si puissantes. #neurosciences #illusion #cerveau",
+      "scores": {
+        "trend_fit": 6,
+        "science_fit": 9,
+        "search_value": 7,
+        "retention_hook": 8,
+        "demo_potential": 7,
+        "comment_trigger": 8,
+        "monetization_fit": 9
+      }
+    }
+  ]
+}

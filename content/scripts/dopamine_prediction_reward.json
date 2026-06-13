@@ -1,0 +1,115 @@
+{
+  "id": "dopamine_prediction_reward",
+  "topic": "Dopamine and reward prediction",
+  "duration_target_seconds": 68,
+  "positioning": "Technical but accessible neuroscience video for monetizable TikTok format.",
+  "hook": "La dopamine ne te donne pas du plaisir. Elle te dit surtout : recommence.",
+  "voice": {
+    "preferred": "fr-FR-DeniseNeural",
+    "rate": "-2%",
+    "style": "calm, precise, curious, human"
+  },
+  "caption": "La dopamine est souvent un signal d'apprentissage, pas juste une molecule du plaisir. #cerveau #dopamine #neurosciences #science",
+  "cta": "Commente DOPAMINE si tu veux l'exemple du scroll infini.",
+  "upload_note": "Dans TikTok, ajouter un son tendance discret a 2-5% si la voix reste parfaitement claire.",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 2.7,
+      "text": "La dopamine ne te donne pas du plaisir.",
+      "visual": "Bold kinetic title, dopamine molecule silhouette, quick cut."
+    },
+    {
+      "start": 2.7,
+      "end": 6.3,
+      "text": "Elle dit surtout a ton cerveau : recommence.",
+      "visual": "Loop arrow around a brain icon, yellow reward pulse."
+    },
+    {
+      "start": 6.3,
+      "end": 10.7,
+      "text": "En neurosciences, on parle plutot d'erreur de prediction de recompense.",
+      "visual": "Graph: expected reward vs received reward, gap highlighted."
+    },
+    {
+      "start": 10.7,
+      "end": 15.0,
+      "text": "Ton cerveau predit ce qu'une action va rapporter.",
+      "visual": "Action button, prediction meter charging before result."
+    },
+    {
+      "start": 15.0,
+      "end": 19.5,
+      "text": "Puis il compare cette prediction au resultat reel.",
+      "visual": "Split screen: prediction on left, result on right."
+    },
+    {
+      "start": 19.5,
+      "end": 24.0,
+      "text": "Si le resultat est meilleur que prevu, le signal monte.",
+      "visual": "Blue-yellow spike rising on neural trace."
+    },
+    {
+      "start": 24.0,
+      "end": 28.4,
+      "text": "Si le resultat est moins bon que prevu, le signal baisse.",
+      "visual": "Signal drops below baseline, muted colors."
+    },
+    {
+      "start": 28.4,
+      "end": 33.4,
+      "text": "C'est comme ca que ton cerveau met a jour ses probabilites.",
+      "visual": "Probability bars updating from 30% to 70%."
+    },
+    {
+      "start": 33.4,
+      "end": 38.8,
+      "text": "Et c'est pour ca que l'incertitude peut etre plus accrocheuse que la recompense elle-meme.",
+      "visual": "Mystery box, variable reward wheel, suspense beat."
+    },
+    {
+      "start": 38.8,
+      "end": 44.0,
+      "text": "Une notification banale devient puissante si ton cerveau ne sait pas ce qu'elle contient.",
+      "visual": "Phone notification, question mark, dopamine spike."
+    },
+    {
+      "start": 44.0,
+      "end": 49.5,
+      "text": "Pas parce qu'elle est forcement agreable.",
+      "visual": "Notification opens to neutral content, spike fades."
+    },
+    {
+      "start": 49.5,
+      "end": 54.6,
+      "text": "Mais parce qu'elle force ton systeme d'apprentissage a verifier.",
+      "visual": "Brain loop: predict, check, update."
+    },
+    {
+      "start": 54.6,
+      "end": 59.8,
+      "text": "La dopamine n'est donc pas juste la molecule du plaisir.",
+      "visual": "Myth label cracks, replaced by learning signal."
+    },
+    {
+      "start": 59.8,
+      "end": 65.0,
+      "text": "C'est un signal qui apprend a ton cerveau quoi refaire.",
+      "visual": "Final clean summary, CTA appears."
+    },
+    {
+      "start": 65.0,
+      "end": 68.0,
+      "text": "Commente DOPAMINE pour l'exemple du scroll infini.",
+      "visual": "Comment prompt, scroll feed preview, hold frame."
+    }
+  ],
+  "quality_targets": {
+    "format": "vertical 9:16",
+    "min_duration_seconds": 60,
+    "max_duration_seconds": 75,
+    "subtitle_style": "large burned-in subtitles, max 2 lines",
+    "audio": "voice clear over low bed",
+    "monetization_notes": "Original educational content, >60s, technical explanation, comment CTA."
+  }
+}

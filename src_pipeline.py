@@ -225,6 +225,41 @@ def publish(video_path, caption, metadata):
         json.dumps({"caption": caption, "metadata": metadata}, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    require_approval = os.getenv("REQUIRE_MANUAL_APPROVAL", "true").lower() in {"1", "true", "yes", "on"}
+    if require_approval:
+        from src_approval_queue import submit_for_review
+
+        review = submit_for_review(dest, meta_file, caption=caption, source_agent="pipeline")
+        review_mode = os.getenv("REVIEW_MODE", "local").lower()
+        if review_mode in {"tiktok", "tiktok_inbox", "inbox"}:
+            try:
+                from src_approval_queue import stage_on_tiktok
+
+                staged = stage_on_tiktok(review["draft_id"])
+                return {
+                    "status": staged["status"],
+                    "path": str(dest),
+                    "metadata_path": str(meta_file),
+                    "draft_id": review["draft_id"],
+                    "review_path": str(Path(review["video_path"]).parent / "review.json"),
+                    "tiktok_stage_result": staged.get("tiktok_stage_result"),
+                }
+            except Exception as exc:
+                return {
+                    "status": "review_pending",
+                    "path": str(dest),
+                    "metadata_path": str(meta_file),
+                    "draft_id": review["draft_id"],
+                    "review_path": str(Path(review["video_path"]).parent / "review.json"),
+                    "stage_error": str(exc),
+                }
+        return {
+            "status": "review_pending",
+            "path": str(dest),
+            "metadata_path": str(meta_file),
+            "draft_id": review["draft_id"],
+            "review_path": str(Path(review["video_path"]).parent / "review.json"),
+        }
     return {"status": "queued", "path": str(dest), "metadata_path": str(meta_file)}
 
 

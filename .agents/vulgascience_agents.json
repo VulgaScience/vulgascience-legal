@@ -1,0 +1,49 @@
+{
+  "workflow": "VulgaScience approval-first publishing",
+  "policy": {
+    "publish_without_human_approval": false,
+    "default_queue": "storage/review",
+    "approved_status_required": "approved"
+  },
+  "agents": [
+    {
+      "id": "trend_scout",
+      "input": "sources and trend profile",
+      "output": "topic candidates"
+    },
+    {
+      "id": "script_editor",
+      "input": "selected topic",
+      "output": "French TikTok script, hook, CTA, caption"
+    },
+    {
+      "id": "render_agent",
+      "input": "script and visual plan",
+      "output": "mp4, ass, srt, metadata json"
+    },
+    {
+      "id": "quality_gate",
+      "input": "rendered assets",
+      "output": "pass/fail report"
+    },
+    {
+      "id": "approval_agent",
+      "input": "passed candidate",
+      "output": "pending human review draft"
+    },
+    {
+      "id": "publisher",
+      "input": "approved review draft",
+      "output": "published post or safe fallback"
+    }
+  ],
+  "commands": {
+    "check": "python src_agents.py check --video <video.mp4>",
+    "submit_for_review": "python src_agents.py review --video <video.mp4> --metadata <metadata.json>",
+    "list_pending": "python src_approval_queue.py list --status pending",
+    "approve": "python src_approval_queue.py approve <draft_id>",
+    "reject": "python src_approval_queue.py reject <draft_id> --reason \"...\"",
+    "stage_on_tiktok": "python src_approval_queue.py stage <draft_id>",
+    "publish_after_approval": "python src_approval_queue.py publish <draft_id>"
+  }
+}
